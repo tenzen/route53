@@ -17,13 +17,15 @@
 # limitations under the License.
 #
 
-package "libxml2-dev" do
-  action :install
+xml = package "libxml2-dev" do
+  action :nothing
 end
+xml.run_action( :install )
 
-package "libxslt1-dev" do
-  action :install
+xslt = package "libxslt1-dev" do
+  action :nothing
 end
+xslt.run_action( :install )
 
 chef_gem "fog" do
   version "1.10.1"
