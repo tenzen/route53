@@ -25,11 +25,7 @@ package "libxslt1-dev" do
   action :install
 end
 
-chef_gem "json" do
-  version "1.7.7"
-  action :install
-end
-
 chef_gem "fog" do
+  version "1.10.1"
   action :install
 end
