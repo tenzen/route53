@@ -25,6 +25,6 @@ package "libxslt1-dev" do
   action :install
 end
 
-fog = chef_gem "fog" do
+chef_gem "fog" do
   action :install
 end
