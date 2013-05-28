@@ -26,7 +26,7 @@ package "libxslt1-dev" do
 end
 
 chef_gem "json" do
-  action :install
+  action :upgrade
 end
 
 chef_gem "fog" do
