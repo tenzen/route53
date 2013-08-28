@@ -16,18 +16,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
-xml = package "libxml2-dev" do
-  action :nothing
-end
-xml.run_action( :install )
-
-xslt = package "libxslt1-dev" do
-  action :nothing
-end
-xslt.run_action( :install )
+include_recipe "xml::ruby"
 
 chef_gem "fog" do
-  version "1.10.1"
   action :install
 end
