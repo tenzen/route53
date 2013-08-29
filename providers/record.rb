@@ -1,5 +1,6 @@
 action :create do
   require "fog"
+  require "nokogiri"
 
   def name
     @name ||= new_resource.name + "."
@@ -35,7 +36,7 @@ action :create do
                             :type => type,
                             :ttl => ttl })
     rescue Excon::Errors::BadRequest => e
-      Chef::Log.error e.response.body
+      Chef::Log.error Nokogiri::XML( e.response.body ).xpath( "//xmlns:Message" ).text
     end
     new_resource.updated_by_last_action(true)
   end

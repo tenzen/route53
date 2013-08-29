@@ -26,3 +26,6 @@ chef_gem "fog" do
   version "1.10.1"
 end
 
+chef_gem "nokogiri" # XXX nokogiri is part of fog aws,
+                    # even if it is a heavy dependency,
+                    # fog is heavier
