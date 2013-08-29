@@ -26,5 +26,3 @@ chef_gem "fog" do
   version "1.10.1"
 end
 
-chef_gem "nokogiri"
-

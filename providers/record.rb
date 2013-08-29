@@ -1,6 +1,5 @@
 action :create do
   require "fog"
-  require "nokogiri"
 
   def name
     @name ||= new_resource.name + "."
@@ -36,7 +35,7 @@ action :create do
                             :type => type,
                             :ttl => ttl })
     rescue Excon::Errors::BadRequest => e
-      Chef::Log.info Nokogiri::XML( e.response.body ).xpath( "//xmlns:Message" ).text
+      Chef::Log.error e.response.body
     end
     new_resource.updated_by_last_action(true)
   end
@@ -48,14 +47,12 @@ action :create do
   if record.nil?
     create
     Chef::Log.info "Record created: #{name}"
-    new_resource.updated_by_last_action(true)
   elsif value != record.value.first
+	record.destroy
     if overwrite
-      record.destroy
       create
       Chef::Log.info "Record overwritten: #{name}"
     else
-      record.destroy
       record.value << value
       record.save
       new_resource.updated_by_last_action(true)
@@ -66,7 +63,6 @@ end
 
 action :delete do
   require "fog"
-  require "nokogiri"
 
   def name
     @name ||= new_resource.name + "."
@@ -89,8 +85,7 @@ action :delete do
 
   if not record.nil?
     record.destroy
-    create
-    Chef::Log.info "Record modified: #{name}"
+    Chef::Log.info "Record removed: #{name}"
     new_resource.updated_by_last_action(true)
   end
 
