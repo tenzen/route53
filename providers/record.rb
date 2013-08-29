@@ -41,7 +41,9 @@ action :create do
     new_resource.updated_by_last_action(true)
   end
 
-  record = zone.records.get(name, type)
+  record = zone.records.all.select do |record|
+    record.name == name && record.type == type
+  end.first
 
   if record.nil?
     create

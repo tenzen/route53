@@ -18,6 +18,13 @@
 #
 include_recipe "xml::ruby"
 
+node.normal['build_essential']['compiletime'] = true
+include_recipe 'build-essential'
+
 chef_gem "fog" do
   action :install
+  version "1.10.1"
 end
+
+chef_gem "nokogiri"
+
