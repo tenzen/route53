@@ -16,16 +16,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-include_recipe "xml::ruby"
+
 
 node.normal['build_essential']['compiletime'] = true
 include_recipe 'build-essential'
 
-chef_gem "fog" do
-  action :install
-  version "1.10.1"
-end
+fog_version = "1.10.1"
+if !Gem::Specification.find_all_by_name("fog", fog_version).any?
 
-chef_gem "nokogiri" # XXX nokogiri is part of fog aws,
-                    # even if it is a heavy dependency,
-                    # fog is heavier
+	include_recipe "xml::ruby" 
+
+	chef_gem "nokogiri" # XXX nokogiri is part of fog aws,
+						# even if it is a heavy dependency,
+						# fog is heavier
+
+	chef_gem "fog" do
+	  action :install
+	  version fog_version
+	end
+
+end
