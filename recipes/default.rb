@@ -24,11 +24,8 @@ include_recipe 'build-essential'
 fog_version = "1.10.1"
 if !Gem::Specification.find_all_by_name("fog", fog_version).any?
 
-	include_recipe "xml::ruby" 
-
-	chef_gem "nokogiri" # XXX nokogiri is part of fog aws,
-						# even if it is a heavy dependency,
-						# fog is heavier
+	ENV['NOKOGIRI_USE_SYSTEM_LIBRARIES'] = 'true'
+	include_recipe "xml::ruby" # XXX includes nokogiri
 
 	chef_gem "fog" do
 	  action :install
